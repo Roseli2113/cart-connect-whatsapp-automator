@@ -1,9 +1,15 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
+import Dashboard from "./components/dashboard/Dashboard";
+import WhatsAppConnect from "./components/whatsapp/WhatsAppConnect";
+import ScriptGenerator from "./components/script/ScriptGenerator";
+import MessageTemplates from "./components/templates/MessageTemplates";
+import MessageHistory from "./components/history/MessageHistory";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -16,7 +22,11 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/whatsapp" element={<WhatsAppConnect />} />
+          <Route path="/script" element={<ScriptGenerator />} />
+          <Route path="/templates" element={<MessageTemplates />} />
+          <Route path="/history" element={<MessageHistory />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
