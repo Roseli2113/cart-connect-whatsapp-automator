@@ -11,6 +11,7 @@ import WhatsAppConnect from "./components/whatsapp/WhatsAppConnect";
 import ScriptGenerator from "./components/script/ScriptGenerator";
 import MessageTemplates from "./components/templates/MessageTemplates";
 import MessageHistory from "./components/history/MessageHistory";
+import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
 // Create a new QueryClient instance inside the component
@@ -30,6 +31,7 @@ const App = () => {
             <Route path="/script" element={<ScriptGenerator />} />
             <Route path="/templates" element={<MessageTemplates />} />
             <Route path="/history" element={<MessageHistory />} />
+            <Route path="/admin" element={<Admin />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
