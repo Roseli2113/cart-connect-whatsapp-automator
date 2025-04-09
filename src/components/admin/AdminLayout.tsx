@@ -5,7 +5,8 @@ import {
   BarChart3, 
   Settings, 
   LogOut,
-  ShieldAlert
+  ShieldAlert,
+  MessageSquare
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
@@ -27,6 +28,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
   const navigation = [
     { name: "Dashboard", href: "/admin", icon: BarChart3, current: window.location.pathname === "/admin" },
     { name: "Usuários", href: "/admin-dashboard", icon: Users, current: window.location.pathname === "/admin-dashboard" },
+    { name: "WhatsApp", href: "/admin-whatsapp", icon: MessageSquare, current: window.location.pathname === "/admin-whatsapp" },
     { name: "Configurações", href: "/admin/settings", icon: Settings, current: window.location.pathname === "/admin/settings" },
   ];
 

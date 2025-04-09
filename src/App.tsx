@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -14,8 +13,8 @@ import MessageHistory from "./components/history/MessageHistory";
 import Admin from "./pages/Admin";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
+import AdminWhatsApp from "./pages/AdminWhatsApp";
 
-// Create a new QueryClient instance inside the component
 const App = () => {
   const queryClient = new QueryClient();
   
@@ -34,6 +33,7 @@ const App = () => {
             <Route path="/history" element={<MessageHistory />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
+            <Route path="/admin-whatsapp" element={<AdminWhatsApp />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
