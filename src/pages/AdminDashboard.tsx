@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import AdminLayout from '@/components/admin/AdminLayout';
+import UserRegistrationForm from '@/components/admin/UserRegistrationForm';
 
 // Use the client from the existing integrations folder
 import { supabase } from "@/integrations/supabase/client";
@@ -92,7 +93,10 @@ export default function AdminDashboard() {
   return (
     <AdminLayout>
       <div className="p-6">
-        <h1 className="text-2xl font-bold mb-6">Gerenciamento de Usuários</h1>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold">Gerenciamento de Usuários</h1>
+          <UserRegistrationForm />
+        </div>
         
         {loading ? (
           <div className="text-center py-10">
@@ -119,7 +123,7 @@ export default function AdminDashboard() {
                     </p>
                     <p>
                       <span className="font-medium">Status:</span>{" "}
-                      <span className={`inline-block px-2 py-1 rounded ${user.status_conexao === 'Conectado' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                      <span className={`inline-block px-2 py-1 rounded ${user.status_conexao === 'ativo' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                         {user.status_conexao}
                       </span>
                     </p>
