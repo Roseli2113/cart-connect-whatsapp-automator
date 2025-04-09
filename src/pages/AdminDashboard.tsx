@@ -8,8 +8,19 @@ import AdminLayout from '@/components/admin/AdminLayout';
 // Use the client from the existing integrations folder
 import { supabase } from "@/integrations/supabase/client";
 
+// Define the user type based on the database schema
+type Usuario = {
+  id: string;
+  nome: string | null;
+  email: string | null;
+  plano: string | null;
+  status_conexao: string | null;
+  mensagens_usadas: number | null;
+  criado_em: string | null;
+};
+
 export default function AdminDashboard() {
-  const [users, setUsers] = useState<any[]>([]);
+  const [users, setUsers] = useState<Usuario[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -18,7 +29,7 @@ export default function AdminDashboard() {
 
   const fetchUsers = async () => {
     setLoading(true);
-    const { data, error } = await supabase.from('usuarios_custom').select('*');
+    const { data, error } = await supabase.from('usuarios').select('*');
     if (error) {
       console.error('Erro ao buscar usuários:', error);
       toast({
@@ -36,7 +47,7 @@ export default function AdminDashboard() {
     const newPlan = currentPlan === 'pago' ? 'gratuito' : 'pago';
     
     const { error } = await supabase
-      .from('usuarios_custom')
+      .from('usuarios')
       .update({ plano: newPlan })
       .eq('id', userId);
       
@@ -58,8 +69,8 @@ export default function AdminDashboard() {
 
   const resetUserMessages = async (userId: string) => {
     const { error } = await supabase
-      .from('usuarios_custom')
-      .update({ mensagens_enviadas: 0 })
+      .from('usuarios')
+      .update({ mensagens_usadas: 0 })
       .eq('id', userId);
       
     if (error) {
@@ -114,14 +125,14 @@ export default function AdminDashboard() {
                     </p>
                     <p>
                       <span className="font-medium">Mensagens:</span>{" "}
-                      {user.mensagens_enviadas}
+                      {user.mensagens_usadas}
                     </p>
                   </div>
                   
                   <div className="mt-4 flex flex-wrap gap-2">
                     <Button 
                       variant="outline" 
-                      onClick={() => updateUserPlan(user.id, user.plano)}
+                      onClick={() => updateUserPlan(user.id, user.plano || '')}
                     >
                       Mudar para {user.plano === 'pago' ? 'Gratuito' : 'Pago'}
                     </Button>
