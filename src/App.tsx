@@ -12,6 +12,7 @@ import ScriptGenerator from "./components/script/ScriptGenerator";
 import MessageTemplates from "./components/templates/MessageTemplates";
 import MessageHistory from "./components/history/MessageHistory";
 import Admin from "./pages/Admin";
+import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 
 // Create a new QueryClient instance inside the component
@@ -32,6 +33,7 @@ const App = () => {
             <Route path="/templates" element={<MessageTemplates />} />
             <Route path="/history" element={<MessageHistory />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/admin-dashboard" element={<AdminDashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

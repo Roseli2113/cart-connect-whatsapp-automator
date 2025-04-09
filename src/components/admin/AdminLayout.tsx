@@ -25,9 +25,9 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
   };
 
   const navigation = [
-    { name: "Dashboard", href: "/admin", icon: BarChart3, current: true },
-    { name: "Usuários", href: "/admin/users", icon: Users, current: false },
-    { name: "Configurações", href: "/admin/settings", icon: Settings, current: false },
+    { name: "Dashboard", href: "/admin", icon: BarChart3, current: window.location.pathname === "/admin" },
+    { name: "Usuários", href: "/admin-dashboard", icon: Users, current: window.location.pathname === "/admin-dashboard" },
+    { name: "Configurações", href: "/admin/settings", icon: Settings, current: window.location.pathname === "/admin/settings" },
   ];
 
   return (
