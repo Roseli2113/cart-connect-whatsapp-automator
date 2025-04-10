@@ -2,6 +2,8 @@
 import AdminLayout from "@/components/admin/AdminLayout";
 import WhatsAppMessageForm from "@/components/admin/WhatsAppMessageForm";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { AlertCircle } from "lucide-react";
 
 export default function AdminWhatsApp() {
   return (
@@ -10,6 +12,15 @@ export default function AdminWhatsApp() {
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">Comunicação WhatsApp</h1>
         </div>
+        
+        <Alert className="mb-6 border-amber-200 bg-amber-50">
+          <AlertCircle className="h-4 w-4 text-amber-600" />
+          <AlertTitle className="text-amber-600">Integração com Venom-Bot</AlertTitle>
+          <AlertDescription>
+            Certifique-se de que o servidor Venom-Bot esteja configurado e executando para o envio das mensagens.
+            Visite a página de <a href="/whatsapp" className="text-amber-600 underline">Conexão do WhatsApp</a> para iniciar a integração.
+          </AlertDescription>
+        </Alert>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div>
@@ -50,7 +61,7 @@ export default function AdminWhatsApp() {
                   
                   <div className="pt-2 border-t">
                     <p className="text-sm text-orange-600">
-                      <span className="font-medium">Importante:</span> Certifique-se de que o serviço WhatsApp está ativo e conectado 
+                      <span className="font-medium">Importante:</span> Certifique-se de que o serviço WhatsApp/Venom-Bot está ativo e conectado 
                       antes de enviar mensagens.
                     </p>
                   </div>

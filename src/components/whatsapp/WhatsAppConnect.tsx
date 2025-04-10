@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DashboardLayout from "../dashboard/DashboardLayout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -11,19 +10,53 @@ const WhatsAppConnect = () => {
   const [isConnecting, setIsConnecting] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [qrCodeUrl, setQrCodeUrl] = useState("");
+  const [hasTriedConnection, setHasTriedConnection] = useState(false);
+
+  useEffect(() => {
+    const sessionConnection = sessionStorage.getItem('whatsapp-connection-attempt');
+    if (sessionConnection) {
+      setHasTriedConnection(true);
+    }
+  }, []);
 
   const generateFakeQrCode = () => {
-    // For demo purposes, we'll use a placeholder QR code image
     setQrCodeUrl("https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=CartConnectDemoQrCode");
   };
 
-  const handleConnect = () => {
+  const handleConnect = async () => {
     setIsConnecting(true);
     
-    // Simulate API connection process
-    setTimeout(() => {
-      generateFakeQrCode();
-    }, 1500);
+    sessionStorage.setItem('whatsapp-connection-attempt', 'true');
+    setHasTriedConnection(true);
+    
+    try {
+      const response = await fetch('https://meu-servidor.com/api/send-whatsapp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          numero: "+55SEUNUMEROAQUI",
+          mensagem: "Olá! Você está conectado ao seu WhatsApp com sucesso via Venom-Bot."
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Falha na requisição ao servidor Venom-Bot');
+      }
+      
+      setTimeout(() => {
+        generateFakeQrCode();
+      }, 1500);
+    } catch (error) {
+      console.error('Erro ao conectar com servidor Venom-Bot:', error);
+      toast({
+        title: "Erro na conexão",
+        description: "Não foi possível conectar ao servidor Venom-Bot. Verifique se o servidor está ativo.",
+        variant: "destructive"
+      });
+      setIsConnecting(false);
+    }
   };
 
   const handleDisconnect = () => {
@@ -40,7 +73,6 @@ const WhatsAppConnect = () => {
   const handleRefreshQrCode = () => {
     setQrCodeUrl("");
     
-    // Simulate refreshing QR code
     setTimeout(() => {
       generateFakeQrCode();
       
@@ -52,7 +84,6 @@ const WhatsAppConnect = () => {
   };
 
   const handleFakeConnect = () => {
-    // Simulate successful connection
     setIsConnected(true);
     setIsConnecting(false);
     
@@ -92,16 +123,22 @@ const WhatsAppConnect = () => {
                   <div className="text-center space-y-2">
                     <h3 className="text-lg font-medium">Conecte seu WhatsApp Business</h3>
                     <p className="text-gray-500 max-w-md">
-                      A conexão é feita através de QR Code, similar ao WhatsApp Web. 
+                      A conexão é feita através do Venom-Bot, que envia uma mensagem de confirmação para seu WhatsApp.
                       Suas mensagens serão enviadas a partir do seu número comercial.
                     </p>
                   </div>
                   <Button
                     onClick={handleConnect}
                     className="bg-whatsapp hover:bg-whatsapp-dark"
+                    disabled={hasTriedConnection}
                   >
-                    Iniciar Conexão
+                    {hasTriedConnection ? "Conexão já iniciada" : "Iniciar Conexão"}
                   </Button>
+                  {hasTriedConnection && (
+                    <p className="text-sm text-amber-600">
+                      A conexão já foi iniciada nesta sessão. Verifique seu WhatsApp para confirmar.
+                    </p>
+                  )}
                 </div>
               ) : isConnecting && !isConnected ? (
                 <div className="flex flex-col items-center space-y-6 py-8">
@@ -191,10 +228,10 @@ const WhatsAppConnect = () => {
                   Mantenha seu celular conectado à internet para garantir o funcionamento contínuo.
                 </li>
                 <li className="text-gray-700">
-                  Mensagens são enviadas através da API oficial do WhatsApp, seguindo todas as políticas da plataforma.
+                  Mensagens são enviadas através da biblioteca Venom-Bot, seguindo todas as políticas da plataforma.
                 </li>
                 <li className="text-gray-700">
-                  Recomendamos manter o aplicativo do WhatsApp Business aberto ou em segundo plano.
+                  Certifique-se de que o servidor do Venom-Bot está em execução antes de iniciar a conexão.
                 </li>
               </ul>
             </CardContent>
@@ -215,7 +252,7 @@ const WhatsAppConnect = () => {
                   <span className="font-medium">Status</span>
                   <span className="flex items-center text-green-600">
                     <div className="h-2 w-2 rounded-full bg-green-600 mr-2"></div>
-                    Conectado
+                    Conectado via Venom-Bot
                   </span>
                 </div>
                 
