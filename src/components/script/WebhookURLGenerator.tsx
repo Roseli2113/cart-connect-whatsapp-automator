@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Clipboard, Copy, CheckCircle } from "lucide-react";
+import { Clipboard, Copy, CheckCircle, Check } from "lucide-react";
 import { toast } from "@/components/ui/use-toast";
 
 const WebhookURLGenerator = () => {
@@ -11,6 +11,7 @@ const WebhookURLGenerator = () => {
   const [webhookUrl, setWebhookUrl] = useState('');
   const [isCopied, setIsCopied] = useState(false);
   const [isValidated, setIsValidated] = useState(false);
+  const [isValidating, setIsValidating] = useState(false);
 
   const baseUrl = window.location.origin;
 
@@ -44,8 +45,10 @@ const WebhookURLGenerator = () => {
 
   const validateIntegration = () => {
     // Simular validação de integração
+    setIsValidating(true);
     setTimeout(() => {
       setIsValidated(true);
+      setIsValidating(false);
       toast({
         title: "Integração validada com sucesso!",
         description: "Sua configuração de webhook está funcionando corretamente.",
@@ -95,7 +98,7 @@ const WebhookURLGenerator = () => {
               <div className="bg-muted p-4 rounded-md mt-4">
                 <h4 className="font-semibold mb-2">Como configurar no WooCommerce:</h4>
                 <ol className="list-decimal list-inside space-y-2">
-                  <li>Acesse WooCommerce > Configurações > Webhooks no painel WordPress</li>
+                  <li>Acesse WooCommerce {'>'}  Configurações {'>'}  Webhooks no painel WordPress</li>
                   <li>Clique em "Adicionar Webhook"</li>
                   <li>Nome: "Carrinho Abandonado"</li>
                   <li>Status: Ativo</li>
@@ -105,13 +108,24 @@ const WebhookURLGenerator = () => {
                 </ol>
               </div>
 
+              <div className="bg-green-50 border border-green-200 p-4 rounded-md">
+                <h4 className="font-semibold flex items-center text-green-700 mb-2">
+                  <Check className="h-5 w-5 mr-2" /> Validando a Instalação
+                </h4>
+                <p className="text-green-700">
+                  Após instalar o script, volte ao CartConnect e clique em "Validar Integração". 
+                  Faça um teste adicionando produtos ao carrinho e iniciando o checkout para 
+                  confirmar se os eventos estão sendo registrados corretamente.
+                </p>
+              </div>
+
               <Button 
                 onClick={validateIntegration} 
-                variant="secondary" 
+                variant="default" 
                 className="w-full mt-4"
-                disabled={isValidated}
+                disabled={isValidated || isValidating}
               >
-                {isValidated ? "Integração Validada" : "Validar Integração"}
+                {isValidating ? "Validando..." : isValidated ? "Integração Validada ✓" : "Validar Integração"}
               </Button>
             </div>
           )}
