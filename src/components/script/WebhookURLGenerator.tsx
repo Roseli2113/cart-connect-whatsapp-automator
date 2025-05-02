@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button } from "../../../components/ui/button";
 import { Input } from "../../../components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../../components/ui/card";
-import { Clipboard, Copy, CheckCircle, Check } from "lucide-react";
+import { Clipboard, Copy, CheckCircle, Check, LinkIcon } from "lucide-react";
 import { toast } from "../../../components/ui/use-toast";
 
 const WebhookURLGenerator = () => {
@@ -57,10 +57,13 @@ const WebhookURLGenerator = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <Card className="w-full max-w-3xl mx-auto">
+    <div className="space-y-6">
+      <Card className="border-l-4 border-primary">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">Gerador de URL para Webhook</CardTitle>
+          <CardTitle className="text-xl font-bold flex items-center">
+            <LinkIcon className="mr-2 h-5 w-5 text-primary" />
+            Gerador de URL para Webhook
+          </CardTitle>
           <CardDescription>
             Gere uma URL única para integrar o WooCommerce com o WhatsApp via webhook.
           </CardDescription>
@@ -70,63 +73,64 @@ const WebhookURLGenerator = () => {
             <label htmlFor="userId" className="text-sm font-medium">
               ID do Usuário
             </label>
-            <Input
-              id="userId"
-              value={userId}
-              onChange={(e) => setUserId(e.target.value)}
-              placeholder="Digite o ID do usuário"
-              className="w-full"
-            />
+            <div className="flex space-x-2">
+              <Input
+                id="userId"
+                value={userId}
+                onChange={(e) => setUserId(e.target.value)}
+                placeholder="Digite o ID do usuário"
+                className="w-full"
+              />
+              <Button onClick={generateWebhookUrl}>
+                Gerar URL
+              </Button>
+            </div>
           </div>
 
-          <Button onClick={generateWebhookUrl} className="w-full">
-            Gerar URL do Webhook
-          </Button>
-
           {webhookUrl && (
-            <div className="mt-6 space-y-4">
+            <div className="space-y-4">
               <h3 className="font-semibold">URL do Webhook Gerada:</h3>
               <div className="flex items-center gap-2">
-                <div className="p-3 bg-muted rounded-md flex-1 break-all">
+                <div className="p-3 bg-muted rounded-md flex-1 break-all border border-gray-200">
                   {webhookUrl}
                 </div>
-                <Button variant="outline" size="icon" onClick={copyToClipboard}>
-                  {isCopied ? <CheckCircle className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                <Button variant="outline" size="icon" onClick={copyToClipboard} className="flex-shrink-0">
+                  {isCopied ? <CheckCircle className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
                 </Button>
               </div>
 
-              <div className="bg-muted p-4 rounded-md mt-4">
-                <h4 className="font-semibold mb-2">Como configurar no WooCommerce:</h4>
-                <ol className="list-decimal list-inside space-y-2">
-                  <li>Acesse WooCommerce {'>'} Configurações {'>'} Webhooks no painel WordPress</li>
-                  <li>Clique em "Adicionar Webhook"</li>
-                  <li>Nome: "Carrinho Abandonado"</li>
-                  <li>Status: Ativo</li>
-                  <li>Tópico: "Pedido Atualizado" ou "Pedido Criado"</li>
-                  <li>URL de Entrega: Cole a URL gerada acima</li>
-                  <li>Salve o Webhook</li>
-                </ol>
-              </div>
+              <Card className="bg-blue-50 border-blue-200">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm font-medium text-blue-700">Como configurar no WooCommerce</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ol className="list-decimal list-inside space-y-1 text-sm text-blue-800">
+                    <li>Acesse WooCommerce {'>'} Configurações {'>'} Webhooks no painel WordPress</li>
+                    <li>Clique em "Adicionar Webhook"</li>
+                    <li>Nome: "Carrinho Abandonado"</li>
+                    <li>Status: Ativo</li>
+                    <li>Tópico: "Pedido Atualizado" ou "Pedido Criado"</li>
+                    <li>URL de Entrega: Cole a URL gerada acima</li>
+                    <li>Salve o Webhook</li>
+                  </ol>
+                </CardContent>
+              </Card>
 
-              <div className="bg-green-50 border border-green-200 p-4 rounded-md">
-                <h4 className="font-semibold flex items-center text-green-700 mb-2">
-                  <Check className="h-5 w-5 mr-2" /> Validando a Instalação
-                </h4>
-                <p className="text-green-700">
-                  Após instalar o script, volte ao CartConnect e clique em "Validar Integração". 
-                  Faça um teste adicionando produtos ao carrinho e iniciando o checkout para 
-                  confirmar se os eventos estão sendo registrados corretamente.
-                </p>
-              </div>
-
-              <Button 
-                onClick={validateIntegration} 
-                variant="default" 
-                className="w-full mt-4 bg-primary hover:bg-primary/90 text-white font-medium"
-                disabled={isValidated || isValidating}
-              >
-                {isValidating ? "Validando..." : isValidated ? "Integração Validada ✓" : "Validar Integração"}
-              </Button>
+              <Card className="bg-green-50 border-green-200">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-sm font-medium text-green-700 flex items-center">
+                    <Check className="h-5 w-5 mr-2" /> 
+                    Validando a Instalação
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-green-700 text-sm">
+                    Após instalar o script, volte ao CartConnect e clique em "Validar Integração". 
+                    Faça um teste adicionando produtos ao carrinho e iniciando o checkout para 
+                    confirmar se os eventos estão sendo registrados corretamente.
+                  </p>
+                </CardContent>
+              </Card>
             </div>
           )}
         </CardContent>
