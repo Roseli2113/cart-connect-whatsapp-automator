@@ -1,10 +1,10 @@
 
 import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "../../components/ui/button";
+import { Input } from "../../components/ui/input";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../components/ui/card";
 import { Clipboard, Copy, CheckCircle, Check } from "lucide-react";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "../../components/ui/use-toast";
 
 const WebhookURLGenerator = () => {
   const [userId, setUserId] = useState('');
@@ -98,7 +98,7 @@ const WebhookURLGenerator = () => {
               <div className="bg-muted p-4 rounded-md mt-4">
                 <h4 className="font-semibold mb-2">Como configurar no WooCommerce:</h4>
                 <ol className="list-decimal list-inside space-y-2">
-                  <li>Acesse WooCommerce {'>'}  Configurações {'>'}  Webhooks no painel WordPress</li>
+                  <li>Acesse WooCommerce {'>'} Configurações {'>'} Webhooks no painel WordPress</li>
                   <li>Clique em "Adicionar Webhook"</li>
                   <li>Nome: "Carrinho Abandonado"</li>
                   <li>Status: Ativo</li>
