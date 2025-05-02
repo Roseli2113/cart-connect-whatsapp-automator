@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import WebhookURLGenerator from './WebhookURLGenerator';
-import { Button } from "../../components/ui/button";
+import { Button } from "../../../components/ui/button";
 import { Check } from "lucide-react";
 
 const ScriptGenerator = () => {
