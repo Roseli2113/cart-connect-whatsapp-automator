@@ -1,10 +1,10 @@
 
 import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "../../components/ui/button";
+import { Input } from "../../components/ui/input";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "../../components/ui/card";
 import { Clipboard, Copy, CheckCircle, Check } from "lucide-react";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "../../components/ui/use-toast";
 
 const WebhookURLGenerator = () => {
   const [userId, setUserId] = useState('');
@@ -122,7 +122,7 @@ const WebhookURLGenerator = () => {
               <Button 
                 onClick={validateIntegration} 
                 variant="default" 
-                className="w-full mt-4"
+                className="w-full mt-4 bg-primary hover:bg-primary/90 text-white font-medium"
                 disabled={isValidated || isValidating}
               >
                 {isValidating ? "Validando..." : isValidated ? "Integração Validada ✓" : "Validar Integração"}
